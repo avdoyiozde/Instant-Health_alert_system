@@ -4,11 +4,11 @@ from kafka import KafkaProducer
 import json
 import time
 
-HOST = 'upgraddetest.cyaielc9bmnf.us-east-1.rds.amazonaws.com'
-DATABASE = 'testdatabase'
-USER = 'student'
-PASSWORD = 'STUDENT123'
-TOPIC='patients_vital_info'
+HOST = ''
+DATABASE = ''
+USER = ''
+PASSWORD = ''
+TOPIC=''
 KAFKA_BOOTSTRAP_SERVERS='localhost:9092'
 producer = KafkaProducer(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS, value_serializer=lambda x: json.dumps(x).encode('utf-8'))  
 
@@ -45,13 +45,6 @@ def fetch_data(host, database, user, password):
         if connection.is_connected():
             cursor.close()
             connection.close()
-
-def delivery_report(err, msg):
-    if err is not None:
-        print(f"Message delivery failed: {err}")
-    else:
-        print(f"Message delivered to {msg.topic()} [{msg.partition()}]")
-
 
 def produce_to_kafka(data,topic):
     if not data:

@@ -1,0 +1,41 @@
+Kafka Setup Instructions
+
+1. Download and Extract Kafka:
+   bash
+   wget https://downloads.apache.org/kafka/3.6.2/kafka_2.12-3.6.2.tgz
+   tar -xvf kafka_2.12-3.6.2.tgz
+   cd kafka_2.12-3.6.2/
+
+
+2. Configure Kafka Server:
+   Edit the Kafka server properties to ensure it?s configured correctly (e.g., update listeners if necessary):
+   bash
+   vi config/server.properties
+
+
+3. Start Zookeeper:
+   Kafka relies on Zookeeper to manage distributed coordination, so you need to start Zookeeper first:
+   bash
+   bin/zookeeper-server-start.sh config/zookeeper.properties
+
+
+4. Start Kafka Server:
+   Once Zookeeper is running, start the Kafka broker:
+   bash
+   bin/kafka-server-start.sh config/server.properties
+
+
+5. Create Kafka Topics:
+   Create two topics ? one for patient vital information (patients_vital_info) and one for alerts (alerts_message):
+   bash
+   bin/kafka-topics.sh --create --topic patients_vital_info --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+   bin/kafka-topics.sh --create --topic alerts_message --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+
+
+6. Verify Topics:
+   To verify if the topics were created successfully, run:
+   bash
+   bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+
+This setup provides the necessary configuration to run your Kafka instance locally, with two important topics: one for streaming patient vital data and one for sending alerts. The topics will be used by the producer and consumer scripts in your healthcare monitoring pipeline.
